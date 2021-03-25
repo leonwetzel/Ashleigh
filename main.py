@@ -51,10 +51,8 @@ class AshleighClient(discord.Client):
             except IndexError:
                 await message.reply(f"No description? No wonder you don't get likes...", mention_author=True)
 
-
         if message.content.startswith("!menu"):
             menu = await scrape_crown_menu()
-
             await message.reply(menu.to_string(), mention_author=True)
 
         if message.content == "!":
