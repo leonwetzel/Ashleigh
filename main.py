@@ -42,11 +42,6 @@ class AshleighClient(discord.Client):
             except IndexError:
                 await message.reply(f"No description? No wonder you don't get likes...", mention_author=True)
 
-            # if description:
-            #     await message.reply(f"Hmm, the profile description is {len(description)} characters long...", mention_author=True)
-            # else:
-            #     await message.reply(f"No description? No wonder you don't get likes...", mention_author=True)
-
         if message.content == "!":
             await message.reply(f'How can I help you?', mention_author=True)
 
