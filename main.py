@@ -1,5 +1,5 @@
 import discord
-
+from scraper import scrape_crown_menu
 
 class AshleighClient(discord.Client):
     async def on_ready(self):
@@ -41,6 +41,12 @@ class AshleighClient(discord.Client):
                 await message.reply(f"Hmm, the profile description is {len(description)} characters long...", mention_author=True)
             except IndexError:
                 await message.reply(f"No description? No wonder you don't get likes...", mention_author=True)
+
+
+        if message.content.startswith("!menu"):
+            menu = await scrape_crown_menu()
+
+            await message.reply(menu.to_string(), mention_author=True)
 
         if message.content == "!":
             await message.reply(f'How can I help you?', mention_author=True)
