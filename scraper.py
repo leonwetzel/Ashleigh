@@ -11,11 +11,13 @@ async def scrape_crown_menu():
 
     tabs = [(tab.text, tab['href'][1:]) for tab in soup.find('ul', class_="tab-nav").findAll('a', href=True)]
 
-    df = pd.DataFrame(columns=['Title', 'Price'])
+    tables = []
 
     for tab in tabs:
         tab_title = tab[0]
         table_id = tab[1]
+
+        df = pd.DataFrame(columns=['Title', 'Price'])
 
         rows = soup.find('div', id=table_id).find('table').find('tbody').findAll('tr')
 
@@ -25,4 +27,6 @@ async def scrape_crown_menu():
 
             df = df.append({'Title' : title, 'Price' : price}, ignore_index=True)
 
-    return df
+        tables.append((tab_title, df))
+
+    return tables
