@@ -24,7 +24,7 @@ def scrape_crown_menu():
 
         for row in rows:
             title = row.find('td', class_='column-1').text
-            price = row.find('td', class_='column-2').text
+            price = '€' + row.find('td', class_='column-2').text
 
             df = df.append({'Title' : title, 'Price' : price}, ignore_index=True)
 
