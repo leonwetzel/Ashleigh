@@ -50,6 +50,18 @@ async def menu(ctx):
         await ctx.channel.send(tabs[0] + ':\n\n' + '```' + ascii_menu + '```', mention_author=True)
 
 
+@bot.command(
+    help="Need some feedback on your Tinder description? Let Ashleigh take a look!",
+    brief="Let Ashleigh take a look at your Tinder description."
+)
+async def tinder(ctx, description):
+    try:
+        await ctx.channel.send(f"Hmm, the profile description is {len(description)} characters long...",
+                               mention_author=True)
+    except IndexError:
+        await ctx.channel.send(f"No description? No wonder you don't get likes...", mention_author=True)
+
+
 if __name__ == '__main__':
     with open("token.txt", "r", encoding='utf-8') as F:
         token = F.read()
