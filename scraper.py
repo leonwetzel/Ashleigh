@@ -4,7 +4,7 @@ import pandas as pd
 from functools import lru_cache
 
 @lru_cache(10)
-def scrape_crown_menu():
+async def scrape_crown_menu():
     r = requests.get('https://www.cafethecrown.nl/assortiment/')
 
     soup = BeautifulSoup(r.text, features="lxml")
