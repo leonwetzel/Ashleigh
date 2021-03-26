@@ -56,13 +56,11 @@ class AshleighClient(discord.Client):
 
         if message.content.startswith("!menu"):
             menu = scrape_crown_menu()
+            
             for tabs in menu:
-                ascii_menu = tabulate(tabs[0], headers='keys', tablefmt='psql')
+                ascii_menu = '{0}:\n\n```{1}```'.format(tabs[0], tabulate(tabs[1], headers='keys', tablefmt='psql'))
 
-                await message.reply(tabs[0] + ':\n\n' + '```' +  ascii_menu + '```', mention_author=True)
-
-                # await message.reply(tabs[0] + ':\n\n' + tabs[1].to_string(), mention_author=True)
-                # await message.channel.send(tabs[1].to_json(), mention_author=True)
+                await message.reply(ascii_menu, mention_author=True)
 
         if message.content == "!":
             await message.reply(f'How can I help you?', mention_author=True)
