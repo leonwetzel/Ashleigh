@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import discord
 from discord.ext import commands
+from tabulate import tabulate
 
 from assets import get_quote, get_product_information
+from scraper import scrape_crown_menu
 
 bot = commands.Bot(command_prefix='!')
 
@@ -29,11 +31,23 @@ async def inspire(ctx):
 
 
 @bot.command(
-    help="In need of inspiration? Call for a quote using this command!",
-    brief="Prints an inspiring quote."
+    help="Orders the requested drink.",
+    brief="Order your favourite drink using this command!"
 )
-async def order(ctx, product):
-    pass
+async def order(ctx):
+    await ctx.channel.send("I am sorry, this function needs to be reimplemented!", mention_author=True)
+
+
+@bot.command(
+    help="Display the menu of Cafe the Crown.",
+    brief="Find your favourite drinks here!"
+)
+async def menu(ctx):
+    menu = scrape_crown_menu()
+
+    for tabs in menu:
+        ascii_menu = tabulate(tabs[1], headers='keys', tablefmt='psql')
+        await ctx.channel.send(tabs[0] + ':\n\n' + '```' + ascii_menu + '```', mention_author=True)
 
 
 if __name__ == '__main__':

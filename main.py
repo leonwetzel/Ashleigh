@@ -57,7 +57,7 @@ class AshleighClient(discord.Client):
         if message.content.startswith("!menu"):
             menu = scrape_crown_menu()
             for tabs in menu:
-                ascii_menu = tabulate(tabs[0], headers='keys', tablefmt='psql')
+                ascii_menu = tabulate(tabs[1], headers='keys', tablefmt='psql')
 
                 await message.reply(tabs[0] + ':\n\n' + '```' +  ascii_menu + '```', mention_author=True)
 
