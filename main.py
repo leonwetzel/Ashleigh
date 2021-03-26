@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
 import json
 
 import discord
 import requests
 
 from scraper import scrape_crown_menu
+
 
 class AshleighClient(discord.Client):
     async def on_ready(self):

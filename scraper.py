@@ -1,10 +1,11 @@
+#!/usr/bin/env python3
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 from functools import lru_cache
 
 @lru_cache(10)
-async def scrape_crown_menu():
+def scrape_crown_menu():
     r = requests.get('https://www.cafethecrown.nl/assortiment/')
 
     soup = BeautifulSoup(r.text, features="lxml")
