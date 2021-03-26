@@ -54,7 +54,8 @@ class AshleighClient(discord.Client):
         if message.content.startswith("!menu"):
             menu = scrape_crown_menu()
             for tabs in menu:
-                await message.reply(tabs[0] + ':\n\n' + tabs[1].to_string(), mention_author=True)
+                # await message.reply(tabs[0] + ':\n\n' + tabs[1].to_string(), mention_author=True)
+                await message.channel.send(tabs[1].to_json(), mention_author=True)
 
         if message.content == "!":
             await message.reply(f'How can I help you?', mention_author=True)
