@@ -10,7 +10,6 @@ from scraper import scrape_crown_menu
 
 bot = commands.Bot(command_prefix='/')
 
-
 @bot.command(
     help="A simpele query to test if the bot works.",
     brief="Test if Ashleigh is operating succesfully."
@@ -57,7 +56,6 @@ async def menu(ctx):
     for tabs in menu:
         ascii_menu = tabulate(tabs[1], headers='keys', tablefmt='psql')
         await ctx.message.reply(tabs[0] + ':\n\n' + '```' + ascii_menu + '```', mention_author=True)
-
 
 @bot.command(
     help="Want to cheer your day up with some jokes? Ask Ashleigh!",
