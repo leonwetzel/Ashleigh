@@ -18,5 +18,11 @@ def get_star_wars_quote():
     return quote
 
 
+def get_joke():
+    response = requests.get("https://v2.jokeapi.dev/joke/Any?blacklistFlags=racist&type=single")
+    json_data = json.loads(response.text)
+    joke = json_data['joke']
+    return joke
+
 def get_product_information():
     pass

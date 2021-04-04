@@ -5,11 +5,10 @@ import discord
 from discord.ext import commands
 from tabulate import tabulate
 
-from assets import get_inspiring_quote, get_product_information, get_star_wars_quote
+from assets import get_inspiring_quote, get_product_information, get_star_wars_quote, get_joke
 from scraper import scrape_crown_menu
 
 bot = commands.Bot(command_prefix='/')
-
 
 @bot.command(
     help="A simpele query to test if the bot works.",
@@ -58,6 +57,12 @@ async def menu(ctx):
         ascii_menu = tabulate(tabs[1], headers='keys', tablefmt='psql')
         await ctx.message.reply(tabs[0] + ':\n\n' + '```' + ascii_menu + '```', mention_author=True)
 
+@bot.command(
+    help="Want to cheer your day up with some jokes? Ask Ashleigh!",
+    brief="Let Ashleigh tell you a joke."
+)
+async def joke(ctx):
+    await ctx.message.reply(get_joke())
 
 @bot.command(
     help="Need some feedback on your Tinder description? Let Ashleigh take a look!",
