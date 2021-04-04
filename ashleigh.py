@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
+import random
+
 import discord
 from discord.ext import commands
 from tabulate import tabulate
 
-from assets import get_quote, get_product_information
+from assets import get_inspiring_quote, get_product_information, get_star_wars_quote
 from scraper import scrape_crown_menu
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='/')
 
 
-@bot.command()
+@bot.command(
+    help="A simpele query to test if the bot works.",
+    brief="Test if Ashleigh is operating succesfully."
+)
 async def test(ctx):
-    await ctx.channel.send("Hi, I am Ashleigh. Welcome to The Crown!", mention_author=True)
+    await ctx.message.reply("Hi, I am Ashleigh. Welcome to The Crown!", mention_author=True)
 
 
 @bot.command(
@@ -19,7 +24,7 @@ async def test(ctx):
     brief="Prints pong as a response to the user's ping."
 )
 async def ping(ctx):
-    await ctx.channel.send("pong", mention_author=True)
+    await ctx.message.reply("pong", mention_author=True)
 
 
 @bot.command(
@@ -27,15 +32,19 @@ async def ping(ctx):
     brief="Prints an inspiring quote."
 )
 async def inspire(ctx):
-    await ctx.channel.send(get_quote(), mention_author=True)
+    await ctx.message.reply(get_inspiring_quote(), mention_author=True)
+
+# @bot.command()
+# async def force(ctx):
+#     await ctx.channel.send(get_star_wars_quote(), mention_author=True)
 
 
 @bot.command(
     help="Orders the requested drink.",
     brief="Order your favourite drink using this command!"
 )
-async def order(ctx):
-    await ctx.channel.send("I am sorry, this function needs to be reimplemented!", mention_author=True)
+async def order(ctx, *, content):
+    await ctx.message.reply("I am sorry, this function needs to be reimplemented!", mention_author=True)
 
 
 @bot.command(
@@ -47,19 +56,73 @@ async def menu(ctx):
 
     for tabs in menu:
         ascii_menu = tabulate(tabs[1], headers='keys', tablefmt='psql')
-        await ctx.channel.send(tabs[0] + ':\n\n' + '```' + ascii_menu + '```', mention_author=True)
+        await ctx.message.reply(tabs[0] + ':\n\n' + '```' + ascii_menu + '```', mention_author=True)
 
 
 @bot.command(
     help="Need some feedback on your Tinder description? Let Ashleigh take a look!",
     brief="Let Ashleigh take a look at your Tinder description."
 )
-async def tinder(ctx, description):
-    try:
-        await ctx.channel.send(f"Hmm, the profile description is {len(description)} characters long...",
-                               mention_author=True)
-    except IndexError:
-        await ctx.channel.send(f"No description? No wonder you don't get likes...", mention_author=True)
+async def tinder(ctx, *, description):
+    if not description:
+        await ctx.message.add_reaction('🤷‍♂️')
+        await ctx.message.reply(f"No description? No wonder you don't get likes...")
+
+    if len(description) < 20:
+        responses = [
+            "Hmm, that's a small description. Is that the only thing small about you?",
+            "Not a lot of words, eh? Or do I make you speechless?",
+            "Tiny description...  don't tell me you are compensating 😏"
+        ]
+        await ctx.message.add_reaction('👍')
+        await ctx.message.reply(random.choice(responses))
+    else:
+        await ctx.message.add_reaction('👍')
+        await ctx.message.reply(f"Hmm, the profile description is {len(description)} characters long...")
+
+
+@bot.command(
+    help="Ask Ashleigh something trivial!",
+    brief="Ask Ashleigh something trivial!"
+)
+async def query(ctx, *, content):
+    await ctx.message.reply("I am sorry, this function needs to be (re)implemented!", mention_author=True)
+
+
+def to_upper(argument):
+    return argument.upper()
+
+
+@bot.command(
+    help="Display the menu of Cafe the Crown.",
+    brief="Find your favourite drinks here!"
+)
+async def up(ctx, *, content: to_upper):
+    await ctx.message.reply(content)
+
+
+# Events
+@bot.event
+async def on_ready():
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="thirsty customers"))
+    print('Ashleigh is ready for action!')
+
+
+@bot.event
+async def on_command_error(ctx, error):
+    responses = [
+        f"Aww, I cannot help you with that! Maybe Google it?",
+        f"That's a bit too much for my paygrade, maybe someone else can help you!",
+        f"Sorry there, that's too difficult for me :(",
+        f"Oh dear, I don't know really. You could ask the regulars for more information.",
+        f"Wait, what?",
+        f"I dunno, could you rephrase it?"
+    ]
+    await ctx.message.reply(random.choice(responses))
+
+
+# class Greetings(commands.Cog):
+#     pass
 
 
 if __name__ == '__main__':
@@ -67,3 +130,4 @@ if __name__ == '__main__':
         token = F.read()
 
     bot.run(token)
+
