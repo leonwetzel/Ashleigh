@@ -48,7 +48,7 @@ async def order(ctx, *, content):
 
 @bot.command(
     help="Feeling thirsty? Ask ashleigh about the menu.",
-    brief="Find your favourite drinks here!?"
+    brief="Find your favourite drinks here!"
 )
 async def menu(ctx, *args):
     menu = scrape_crown_menu()
