@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import random
-
 import discord
+
 from discord.ext import commands
 from tabulate import tabulate
 
@@ -47,15 +47,24 @@ async def order(ctx, *, content):
 
 
 @bot.command(
-    help="Display the menu of Cafe the Crown.",
+    help="Feeling thirsty? Ask ashleigh about the menu.",
     brief="Find your favourite drinks here!"
 )
-async def menu(ctx):
+async def menu(ctx, *args):
     menu = scrape_crown_menu()
-
-    for tabs in menu:
-        ascii_menu = tabulate(tabs[1], headers='keys', tablefmt='psql')
-        await ctx.message.reply(tabs[0] + ':\n\n' + '```' + ascii_menu + '```', mention_author=True)
+    if not args:
+        menu_headers = ", ".join([item[0] for item in menu])
+        menu_headers = ' and '.join(menu_headers.rsplit(', ', 1))
+        await ctx.message.reply('Hi there, what can i get for you?\n'+'We have: ' + menu_headers)
+    else:
+        if any(args[0].lower() in sub[0].lower() for sub in menu):
+            sub_menu = next(item for item in menu if item[0].lower() == args[0].lower())
+            ascii_menu = tabulate(sub_menu[1], headers='keys', tablefmt='psql')
+            await ctx.message.reply(sub_menu[0] + ':\n\n' + '```' + ascii_menu + '```', mention_author=True)
+        else:
+            menu_headers = ", ".join([item[0] for item in menu])
+            menu_headers = ' and '.join(menu_headers.rsplit(', ', 1))
+            await ctx.message.reply('Hi there, what can i get for you?\n'+'We have: ' + menu_headers)
 
 @bot.command(
     help="Want to cheer your day up with some jokes? Ask Ashleigh!",
