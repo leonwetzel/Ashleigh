@@ -127,12 +127,12 @@ def get_quip():
     return random.choice(quips)
 
 
-@bot.command(
-    help="",
-    brief=""
-)
-async def robert(ctx):
-    await ctx.message.reply(get_quip())
+# @bot.command(
+#     help="",
+#     brief=""
+# )
+# async def robert(ctx):
+#     await ctx.message.reply(get_quip())
 
 
 
