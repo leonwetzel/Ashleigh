@@ -52,16 +52,16 @@ async def order(ctx, *, content):
     help="Feeling thirsty? Ask ashleigh about the menu.",
     brief="Find your favourite drinks here!"
 )
-async def menu(ctx, *args):
+async def menu(ctx, *, category):
     menu_sections = get_available_sections()
 
-    if not args:
+    if not category:
         menu_headers = ", ".join([section for section in menu_sections])
         menu_headers = ' and '.join(menu_headers.rsplit(', ', 1))
 
         await ctx.message.reply('Hi there, what can i get for you?\n'+'We have: ' + menu_headers)
     else:
-        section_name = args[0].lower()
+        section_name = category[0].lower()
 
         if section_name in menu_sections:
             section = get_crown_menu_section(section_name)
@@ -122,12 +122,20 @@ def to_upper(argument):
 async def up(ctx, *, content: to_upper):
     await ctx.message.reply(content)
 
+
+def get_quip():
+    with open("quips.txt") as F:
+        quips = F.readlines()
+    return random.choice(quips)
+
+
 @bot.command(
     help="",
     brief=""
 )
-async def quip(ctx):
-    pass
+async def robert(ctx):
+    await ctx.message.reply(get_quip())
+
 
 
 # Events

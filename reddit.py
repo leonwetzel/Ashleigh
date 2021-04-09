@@ -35,9 +35,9 @@ def main():
     sentences= [comment.replace("\n", "").strip() for sentence
                 in sentences_per_comment for comment in sentence]
 
-    for sentence in sentences:
-        print(sentence)
-        print()
+    with open("quips.txt", "w", encoding='utf-8') as F:
+        for sentence in sentences:
+            F.write(f"{sentence}\n")
 
 
 if __name__ == '__main__':
