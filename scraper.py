@@ -4,6 +4,7 @@ import requests
 import pandas as pd
 from functools import lru_cache
 import os
+from discord.ext import tasks, commands
 
 MENU_DIRECTORY = 'menu'
 
@@ -60,3 +61,14 @@ def get_crown_menu_section(section):
     except IOError as e:
         print(e)
         return None
+
+class CrownScraperCog(commands.Cog):
+    def __init__(self):
+        self.scraper.start()
+
+    def cog_unload(self):
+        self.scraper.cancel()
+
+    @tasks.loop(hours=24)
+    def scraper():
+        scrape_crown_menu()

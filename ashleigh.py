@@ -6,9 +6,11 @@ from discord.ext import commands
 from tabulate import tabulate
 
 from assets import get_inspiring_quote, get_product_information, get_star_wars_quote, get_joke
-from scraper import get_available_sections, get_crown_menu_section, scrape_crown_menu
+from scraper import get_available_sections, get_crown_menu_section, scrape_crown_menu, CrownScraperCog
 
 bot = commands.Bot(command_prefix='/')
+
+bot.add_cog(CrownScraperCog())
 
 @bot.command(
     help="A simpele query to test if the bot works.",
