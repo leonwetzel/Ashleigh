@@ -130,3 +130,6 @@ dmypy.json
 
 .idea
 *.txt
+
+# menu csv files
+menu/
