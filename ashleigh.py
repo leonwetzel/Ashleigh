@@ -69,8 +69,6 @@ async def menu(ctx, *, category):
             ascii_menu = tabulate(section, headers='keys', tablefmt='psql')
 
             await ctx.message.reply(section_name + ':\n\n' + '```' + ascii_menu + '```', mention_author=True)
-        else:
-            menu(ctx)
 
         
 
