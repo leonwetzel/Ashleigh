@@ -130,3 +130,6 @@ dmypy.json
 
 .idea
 token.txt
+
+# menu csv files
+menu/
