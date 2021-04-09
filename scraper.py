@@ -70,5 +70,5 @@ class CrownScraperCog(commands.Cog):
         self.scraper.cancel()
 
     @tasks.loop(hours=24)
-    def scraper():
+    async def scraper(self):
         scrape_crown_menu()
