@@ -114,6 +114,13 @@ def to_upper(argument):
 async def up(ctx, *, content: to_upper):
     await ctx.message.reply(content)
 
+@bot.command(
+    help="",
+    brief=""
+)
+async def quip(ctx):
+    pass
+
 
 # Events
 @bot.event
